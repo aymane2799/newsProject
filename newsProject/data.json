@@ -1,0 +1,21 @@
+[
+    {
+        "model": "news.news",
+        "id": 1,
+        "fields": {
+            "title": "test",
+            "body": "test",
+            "fake": true
+        }
+    },
+
+    {
+        "model": "news.news",
+        "id": 2,
+        "fields": {
+            "title": "Python Crash Course",
+            "body": "Eric Matthes test",
+            "fake": false
+        }
+    }
+]
