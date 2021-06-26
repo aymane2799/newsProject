@@ -1,3 +1,5 @@
+
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
@@ -25,7 +27,9 @@ def check_news(request):
             news_data = json.loads(request.body)
             article= news_data['content']
 
-        result = TrainingModels.predict('article')
+        print(article)
+        result = TrainingModels.predict(article)
+        print(result)
         
         if result == 1:
             return HttpResponse("fake")
@@ -35,12 +39,12 @@ def check_news(request):
 
     except Exception as ex:
         print(ex)
-        return HttpResponse('nothing')
+        return HttpResponse('News Prediction')
 
 
 @api_view(['GET', 'POST', 'DELETE'])
 @parser_classes([JSONParser])
-def check_sentiment(request):
+def check_feeling(request):
     try:
         if request.method == 'POST':
             news_data = json.loads(request.body)
@@ -57,4 +61,4 @@ def check_sentiment(request):
 
     except Exception as ex:
         print(ex)
-        return HttpResponse('nothing')
+        return HttpResponse('Feelings Prediction')

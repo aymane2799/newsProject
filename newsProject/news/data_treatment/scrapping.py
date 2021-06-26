@@ -4,10 +4,10 @@ from pymongo import MongoClient
 from selenium import webdriver
 from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException
 import time
-from indexing_data import load_more_data
+from indexing_data import add_data_to_elastic
 
 def load_more_data(url, button):
-    b = webdriver.Chrome(executable_path='D:/chromedriver.exe')
+    b = webdriver.Chrome(executable_path='C:/Users/ayman/Desktop/New_folder/chromedriver.exe')
 
     #url = "https://ar.hibapress.com/covidmaroc.html"
 
@@ -15,7 +15,7 @@ def load_more_data(url, button):
 
     btn = b.find_element_by_id(button)
 
-    for i in range(30):
+    for i in range(20):
         try:
             time.sleep(6)
             btn = b.find_element_by_id(button)
@@ -26,13 +26,12 @@ def load_more_data(url, button):
     return b.page_source
 
 
-#loaded_page_html = load_more_data("https://ar.hibapress.com/covidmaroc.html", 'load-more-archives')
-loaded_page_html =""
+# loaded_page_html =""
 
 class Db_conn():
     def __init__(self):
         client = MongoClient()
-        self.db = client['news_project']
+        self.db = client['newsProject']
         self.new_coll = self.db.new
 
     def insert_elem(self, article):
@@ -87,11 +86,13 @@ def hiba_press_articles(link):
     print(new_elem)
 
     print("--------------")
-    db.insert_elem(new_elem)
+    # db.insert_elem(new_elem)
     add_data_to_elastic(title, article, 0)
 
 
 def scraping_hiba_press():
+    loaded_page_html = load_more_data("https://ar.hibapress.com/covidmaroc.html", 'load-more-archives')
+
     soup = BeautifulSoup(loaded_page_html, 'html.parser')
     elems = list(soup.find('ul', class_='posts-items').findAll('h2'))
     j = 0
@@ -111,13 +112,11 @@ def scraping_hiba_press():
 
 
 def load_more_Fdata(url, button):
-    b = webdriver.Chrome(executable_path='D:/chromedriver.exe')
-
-    #url = "https://ar.hibapress.com/covidmaroc.html"
+    b = webdriver.Chrome(executable_path='C:/Users/ayman/Desktop/New_folder/chromedriver.exe')
 
     b.get(url)
 
-    for i in range(48):
+    for i in range(15):
         print(i)
         try:
             time.sleep(5)
@@ -160,7 +159,7 @@ def fatabayanou_scraping():
             print("error --")
 
         new_element = {"title": title, "body": content, "fake":1}
-        db.insert_elem(new_element)
+        # db.insert_elem(new_element)
         add_data_to_elastic(title, content, 1)
 
 
@@ -196,10 +195,11 @@ def scrap_taakad(i):
 
         new_element = {"title": title, "body": content, "fake": 1}
         print(new_element)
-        db.insert_elem(new_element)
+        # db.insert_elem(new_element)
         add_data_to_elastic(title, content, 1)
 
 
 #Start scrapping
 
-#fatabayanou_scraping()
+scraping_hiba_press()
+fatabayanou_scraping()

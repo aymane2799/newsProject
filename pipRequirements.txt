@@ -1,0 +1,15 @@
+django
+graphene-django
+djongo
+pymongo
+pandas
+scikit-learn
+selenium
+beautifulsoup4
+requests
+elasticsearch
+elasticsearch-dsl
+django-cors-headers
+requests
+djangorestframework
+mongoengine

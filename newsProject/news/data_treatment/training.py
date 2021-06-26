@@ -20,7 +20,7 @@ def getDataFromDb():
     try:
         # --- Connection to Mongodb --- #
         client = pymongo.MongoClient()
-        database = client['newsProjet']
+        database = client['newsProject']
         news_coll = database.get_collection("news_news")
 
         #fetch data
@@ -35,6 +35,7 @@ def getDataFromDb():
             classes.append(doc['fake'])
             merged_title_content.append(doc['title'] + '' + doc['body'])
 
+
          # --- Put collected information into a Json form (keys: ids, values: combined_title_content) --- #
             content_toJson={}
             for i,cid in enumerate(ids):
@@ -45,7 +46,8 @@ def getDataFromDb():
         print(ex)
 
 data_output = getDataFromDb()
-
+print("------")
+print(data_output)
 
 
 # --- Put the list of combined_title_data from a list of text into a string format --- #
